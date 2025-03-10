@@ -1,0 +1,186 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23ffffff" /></svg>'), auto;
+}
+
+body {
+	background: linear-gradient(45deg, #0f0f0f, #1a1a1a);
+	color: white;
+	font-family: 'Arial', sans-serif;
+	overflow-x: hidden;
+}
+
+.parallax-bg {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: radial-gradient(circle at 50% 50%,
+			rgba(255, 255, 255, 0.1) 0%,
+			rgba(255, 255, 255, 0) 70%);
+	transform: translate(var(--x), var(--y));
+	transition: transform 0.3s ease-out;
+	pointer-events: none;
+}
+
+.hero {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	position: relative;
+}
+
+.title {
+	font-size: 5rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5rem;
+	text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+	animation: glow 2s infinite alternate;
+}
+
+.floating-shapes {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.shape {
+	position: absolute;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 50%;
+	animation: float 10s infinite linear;
+}
+
+.content {
+	padding: 100px 20px;
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 40px;
+	opacity: 0;
+	transform: translateY(50px);
+	transition: 1s;
+}
+
+.card {
+	background: rgba(255, 255, 255, 0.05);
+	padding: 30px;
+	border-radius: 15px;
+	backdrop-filter: blur(10px);
+	transition: 0.3s;
+}
+
+.card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.card {
+	position: relative;
+	overflow: hidden;
+	padding: 0;
+}
+
+.card-image {
+	width: 100%;
+	height: 250px;
+	object-fit: cover;
+	filter: brightness(0.7);
+	transition: all 0.5s ease;
+}
+
+.card:hover .card-image {
+	filter: brightness(1) contrast(1.2);
+	transform: scale(1.05);
+}
+
+.card-content {
+	padding: 25px;
+	position: relative;
+	background: linear-gradient(to top,
+			rgba(0, 0, 0, 0.9) 60%,
+			transparent);
+}
+
+.card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(45deg,
+			rgba(255, 255, 255, 0.1) 0%,
+			transparent 100%);
+	opacity: 0;
+	transition: opacity 0.3s;
+	z-index: 1;
+}
+
+.card:hover::before {
+	opacity: 1;
+}
+
+.card h2 {
+	position: relative;
+	z-index: 2;
+	margin-bottom: 15px;
+	font-size: 1.8rem;
+}
+
+.card p {
+	position: relative;
+	z-index: 2;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes glow {
+	from {
+		text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+	}
+
+	to {
+		text-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+	}
+}
+
+@keyframes float {
+	0% {
+		transform: translateY(0) rotate(0deg);
+	}
+
+	50% {
+		transform: translateY(-50px) rotate(180deg);
+	}
+
+	100% {
+		transform: translateY(0) rotate(360deg);
+	}
+}
+
+.cursor-effect {
+	position: fixed;
+	width: 20px;
+	height: 20px;
+	border: 2px solid white;
+	border-radius: 50%;
+	pointer-events: none;
+	transition: width 0.3s, height 0.3s;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 4px;
+}

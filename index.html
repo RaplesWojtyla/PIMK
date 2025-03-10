@@ -1,1 +1,135 @@
-<h1>Wojtyla Karma</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Creative Space</title>
+
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<div class="parallax-bg"></div>
+	<div class="cursor-effect"></div>
+
+	<section class="hero">
+		<div class="floating-shapes" id="shapes"></div>
+		<h1 class="title">Creative<br>Space</h1>
+	</section>
+
+	<main class="content" id="content">
+		<div class="card">
+			<img src="https://images.unsplash.com/photo-1465101162946-4377e57745c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+				class="card-image" alt="Interstellar">
+			<div class="card-content">
+				<h2>Interstellar</h2>
+				<p>Explore the infinite possibilities of creative coding and web design.</p>
+			</div>
+		</div>
+
+		<div class="card">
+			<img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80"
+				class="card-image" alt="Galaxy">
+			<div class="card-content">
+				<h2>Galaxy</h2>
+				<p>Journey through interactive experiences and dynamic visualizations.</p>
+			</div>
+		</div>
+
+		<div class="card">
+			<img src="https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1370&q=80"
+				class="card-image" alt="Nebula">
+			<div class="card-content">
+				<h2>Nebula</h2>
+				<p>Discover the beauty of particle effects and generative art.</p>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		// Parallax Effect
+		document.addEventListener('mousemove', (e) => {
+			const x = (e.clientX / window.innerWidth - 0.5) * 30;
+			const y = (e.clientY / window.innerHeight - 0.5) * 30;
+			document.documentElement.style.setProperty('--x', `${x}px`);
+			document.documentElement.style.setProperty('--y', `${y}px`);
+
+			// Cursor Effect
+			const cursor = document.querySelector('.cursor-effect');
+			cursor.style.left = `${e.clientX - 10}px`;
+			cursor.style.top = `${e.clientY - 10}px`;
+
+			// Create trailing particles
+			const particle = document.createElement('div');
+			particle.className = 'shape';
+			particle.style.left = `${e.clientX}px`;
+			particle.style.top = `${e.clientY}px`;
+			particle.style.width = `${Math.random() * 20 + 5}px`;
+			particle.style.height = particle.style.width;
+			document.getElementById('shapes').appendChild(particle);
+
+			setTimeout(() => particle.remove(), 1000);
+		});
+
+		// Generate floating shapes
+		function createShapes() {
+			const container = document.getElementById('shapes');
+			for (let i = 0; i < 50; i++) {
+				const shape = document.createElement('div');
+				shape.className = 'shape';
+				shape.style.left = `${Math.random() * 100}%`;
+				shape.style.top = `${Math.random() * 100}%`;
+				shape.style.width = `${Math.random() * 30 + 10}px`;
+				shape.style.height = shape.style.width;
+				shape.style.animationDelay = `${Math.random() * 10}s`;
+				container.appendChild(shape);
+			}
+		}
+
+		// Scroll Animation
+		window.addEventListener('scroll', () => {
+			const content = document.getElementById('content');
+			const scrollY = window.scrollY;
+			const triggerPoint = window.innerHeight / 2;
+
+			if (scrollY > triggerPoint) {
+				content.style.opacity = '1';
+				content.style.transform = 'translateY(0)';
+			}
+		});
+
+		// Interactive Cards
+		document.querySelectorAll('.card').forEach(card => {
+			card.addEventListener('mousemove', (e) => {
+				const rect = card.getBoundingClientRect();
+				const x = e.clientX - rect.left;
+				const y = e.clientY - rect.top;
+				card.style.transform = `perspective(1000px) rotateX(${(y - rect.height / 2) / 10}deg) rotateY(${-(x - rect.width / 2) / 10}deg)`;
+			});
+
+			card.addEventListener('mouseleave', () => {
+				card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+			});
+		});
+
+		// Initialize
+		createShapes();
+
+		// Dynamic background pattern
+		document.body.addEventListener('click', () => {
+			document.body.style.background = `linear-gradient(${Math.random() * 360}deg, 
+                hsl(${Math.random() * 360}, 70%, 20%), 
+                hsl(${Math.random() * 360}, 70%, 10%))`;
+		});
+
+		// Responsive design
+		window.addEventListener('resize', () => {
+			document.getElementById('shapes').innerHTML = '';
+			createShapes();
+		});
+
+	</script>
+</body>
+
+</html>
